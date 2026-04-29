@@ -1,0 +1,500 @@
+/**
+ * MES系统菜单配置
+ * 根据MES需求规格书生成的完整菜单结构
+ */
+
+export interface MenuItem {
+  id: string
+  title: string
+  path?: string
+  icon?: string
+  children?: MenuItem[]
+  functionCode?: string // 功能编号
+  hidden?: boolean // 是否隐藏
+  roles?: string[] // 允许访问的角色
+}
+
+/**
+ * MES系统完整菜单配置
+ * 10个一级菜单, 52个二级菜单, 23个三级菜单
+ */
+export const mesMenuConfig: MenuItem[] = [
+  {
+    id: 'home',
+    title: '首页',
+    path: '/',
+    icon: 'HomeFilled',
+    functionCode: 'SRS-FUNC-HOME'
+  },
+  {
+    id: 'task',
+    title: '任务管理',
+    path: '/task/management',
+    icon: 'Document',
+    functionCode: 'SRS-FUNC-0002'
+  },
+  {
+    id: 'planning',
+    title: '计划排程管理',
+    path: '/planning/management',
+    icon: 'Calendar',
+    functionCode: 'SRS-FUNC-0003'
+  },
+  {
+    id: 'process',
+    title: '工艺技术管理',
+    icon: 'Files',
+    functionCode: 'SRS-FUNC-0004',
+    children: [
+      {
+        id: 'process-product',
+        title: '产品管理',
+        path: '/process/product',
+        functionCode: 'SRS-FUNC-0004-1-2'
+      },
+      {
+        id: 'process-route',
+        title: '工艺路线管理',
+        path: '/process/route',
+        functionCode: 'SRS-FUNC-0004-3'
+      },
+      {
+        id: 'process-list',
+        title: '工序管理',
+        path: '/process/list',
+        functionCode: 'SRS-FUNC-0004-8'
+      },
+      {
+        id: 'process-files',
+        title: '工艺文件管理',
+        path: '/process/files',
+        functionCode: 'SRS-FUNC-0004-4-5-6-7'
+      }
+    ]
+  },
+  {
+    id: 'production',
+    title: '生产执行管理',
+    icon: 'Setting',
+    functionCode: 'SRS-FUNC-0005',
+    children: [
+      {
+        id: 'production-workorder',
+        title: '工单管理',
+        path: '/production/workorder/generate',
+        functionCode: 'SRS-FUNC-0005-1'
+      },
+      {
+        id: 'production-monitor',
+        title: '生产任务监控',
+        path: '/production/monitor/board',
+        functionCode: 'SRS-FUNC-0005-2'
+      },
+      {
+        id: 'production-env-test',
+        title: '环境测试记录管理',
+        path: '/production/env-test',
+        functionCode: 'SRS-FUNC-0005-3'
+      },
+      {
+        id: 'production-exception',
+        title: '异常记录查询处理',
+        path: '/production/exception',
+        functionCode: 'SRS-FUNC-0005-4'
+      },
+      {
+        id: 'production-online-offline',
+        title: '上下线管理',
+        path: '/production/online-offline/online',
+        functionCode: 'SRS-FUNC-0005-5'
+      },
+      {
+        id: 'production-incoming',
+        title: '来料检验记录',
+        path: '/production/incoming/manage',
+        functionCode: 'SRS-FUNC-0005-6'
+      },
+      {
+        id: 'production-pcb-test',
+        title: 'PCB板装配前测试记录',
+        path: '/production/pcb-test',
+        functionCode: 'SRS-FUNC-0005-7'
+      },
+      {
+        id: 'production-assembly',
+        title: '装配过程记录',
+        path: '/production/assembly',
+        functionCode: 'SRS-FUNC-0005-8',
+        children: [
+          {
+            id: 'production-assembly-core',
+            title: '机芯装配过程管理',
+            path: '/production/assembly/core',
+            functionCode: 'SRS-FUNC-0005-8.1'
+          },
+          {
+            id: 'production-assembly-machine',
+            title: '整机装配过程管理',
+            path: '/production/assembly/machine',
+            functionCode: 'SRS-FUNC-0005-8.2'
+          }
+        ]
+      },
+      {
+        id: 'production-machine-test',
+        title: '机芯/整机测试',
+        path: '/production/machine-test',
+        functionCode: 'SRS-FUNC-0005-9',
+        children: [
+          {
+            id: 'production-machine-test-record',
+            title: '机芯/整机测试记录',
+            path: '/production/machine-test/record',
+            functionCode: 'SRS-FUNC-0005-9.1'
+          },
+          {
+            id: 'production-machine-test-inspect',
+            title: '机芯/整机测试检验',
+            path: '/production/machine-test/inspect',
+            functionCode: 'SRS-FUNC-0005-9.2'
+          }
+        ]
+      },
+      {
+        id: 'production-aging-test',
+        title: '老化测试记录',
+        path: '/production/aging-test',
+        functionCode: 'SRS-FUNC-0005-10',
+        children: [
+          {
+            id: 'production-aging-test-entry',
+            title: '老化测试录入',
+            path: '/production/aging-test/entry',
+            functionCode: 'SRS-FUNC-0005-10.1'
+          }
+        ]
+      },
+      {
+        id: 'production-oqc',
+        title: '产品出厂检验记录',
+        path: '/production/oqc',
+        functionCode: 'SRS-FUNC-0005-11',
+        children: [
+          {
+            id: 'production-oqc-entry',
+            title: '产品出厂检验录入',
+            path: '/production/oqc/entry',
+            functionCode: 'SRS-FUNC-0005-11.1'
+          },
+          {
+            id: 'production-oqc-review',
+            title: '产品出厂检验结果审核',
+            path: '/production/oqc/review',
+            functionCode: 'SRS-FUNC-0005-11.2'
+          },
+          {
+            id: 'production-oqc-release',
+            title: '产品出厂放行审批',
+            path: '/production/oqc/release',
+            functionCode: 'SRS-FUNC-0005-11.3'
+          }
+        ]
+      },
+      {
+        id: 'production-report',
+        title: '工序报工',
+        path: '/production/report',
+        functionCode: 'SRS-FUNC-0005-12'
+      },
+      {
+        id: 'production-data-view',
+        title: '资料查看',
+        path: '/production/data-view',
+        functionCode: 'SRS-FUNC-0005-13'
+      },
+      {
+        id: 'production-exception-record',
+        title: '异常记录',
+        path: '/production/exception-record',
+        functionCode: 'SRS-FUNC-0005-14'
+      }
+    ]
+  },
+  {
+    id: 'quality',
+    title: '质量监督管理',
+    icon: 'CircleCheck',
+    functionCode: 'SRS-FUNC-0006',
+    children: [
+      {
+        id: 'quality-record',
+        title: '质量记录管理',
+        path: '/quality/record',
+        functionCode: 'SRS-FUNC-0006-1',
+        children: [
+          {
+            id: 'quality-record-query',
+            title: '质量文件查询',
+            path: '/quality/record/query',
+            functionCode: 'SRS-FUNC-0006-1.1'
+          },
+          {
+            id: 'quality-record-nonconform',
+            title: '不合格品记录',
+            path: '/quality/record/nonconform',
+            functionCode: 'SRS-FUNC-0006-1.2'
+          },
+          {
+            id: 'quality-record-review',
+            title: '评审与处理',
+            path: '/quality/record/review',
+            functionCode: 'SRS-FUNC-0006-1.3'
+          },
+          {
+            id: 'quality-record-rework',
+            title: '返工/返修跟踪',
+            path: '/quality/record/rework',
+            functionCode: 'SRS-FUNC-0006-1.4'
+          }
+        ]
+      },
+      {
+        id: 'quality-aftersale',
+        title: '客诉与售后管理',
+        path: '/quality/aftersale',
+        functionCode: 'SRS-FUNC-0006-2',
+        children: [
+          {
+            id: 'quality-aftersale-record',
+            title: '售后服务记录',
+            path: '/quality/aftersale/record',
+            functionCode: 'SRS-FUNC-0006-2.1'
+          },
+          {
+            id: 'quality-aftersale-workorder',
+            title: '返修工单管理',
+            path: '/quality/aftersale/workorder',
+            functionCode: 'SRS-FUNC-0006-2.2'
+          },
+          {
+            id: 'quality-aftersale-approve',
+            title: '售后处理方案审批',
+            path: '/quality/aftersale/approve',
+            functionCode: 'SRS-FUNC-0006-2.3'
+          },
+          {
+            id: 'quality-aftersale-review',
+            title: '返修工单结论审核',
+            path: '/quality/aftersale/review',
+            functionCode: 'SRS-FUNC-0006-2.4'
+          },
+          {
+            id: 'quality-aftersale-stats',
+            title: '售后问题统计分析',
+            path: '/quality/aftersale/stats',
+            functionCode: 'SRS-FUNC-0006-2.5'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'dashboard',
+    title: '信息发布与展示看板',
+    icon: 'DataAnalysis',
+    functionCode: 'SRS-FUNC-0007',
+    path: '/dashboard',
+    hidden: false // 待详细设计,暂时可见但功能待开发
+  },
+  {
+    id: 'collaboration',
+    title: '生产协作',
+    icon: 'Connection',
+    functionCode: 'SRS-FUNC-0008',
+    children: [
+      {
+        id: 'collaboration-support',
+        title: '部门协作支持',
+        path: '/collaboration/support',
+        functionCode: 'SRS-FUNC-0008-1'
+      }
+    ]
+  },
+  {
+    id: 'comprehensive',
+    title: '综合展示',
+    icon: 'Monitor',
+    functionCode: 'SRS-FUNC-0009',
+    path: '/comprehensive',
+    hidden: false // 待详细设计,暂时可见但功能待开发
+  },
+  {
+    id: 'system',
+    title: '系统管理',
+    icon: 'Tools',
+    functionCode: 'SRS-FUNC-00011',
+    children: [
+      {
+        id: 'system-org',
+        title: '组织架构管理',
+        path: '/system/org',
+        functionCode: 'SRS-FUNC-00011-1'
+      },
+      {
+        id: 'system-account-create',
+        title: '账户创建',
+        path: '/system/account-create',
+        functionCode: 'SRS-FUNC-00011-2'
+      },
+      {
+        id: 'system-password-reset',
+        title: '账户密码重置',
+        path: '/system/password-reset',
+        functionCode: 'SRS-FUNC-00011-3'
+      },
+      {
+        id: 'system-account-control',
+        title: '账户控制',
+        path: '/system/account-control',
+        functionCode: 'SRS-FUNC-00011-4'
+      },
+      {
+        id: 'system-role',
+        title: '用户角色管理',
+        path: '/system/role',
+        functionCode: 'SRS-FUNC-00011-5'
+      },
+      {
+        id: 'system-workstation',
+        title: '工位与设备管理',
+        path: '/system/workstation',
+        functionCode: 'SRS-FUNC-00011-6',
+        children: [
+          {
+            id: 'system-workstation-info',
+            title: '工位信息管理',
+            path: '/system/workstation/info',
+            functionCode: 'SRS-FUNC-00011-6.1'
+          },
+          {
+            id: 'system-equipment',
+            title: '设备基础信息管理',
+            path: '/system/workstation/equipment',
+            functionCode: 'SRS-FUNC-00011-6.2'
+          }
+        ]
+      },
+      {
+        id: 'system-param',
+        title: '参数与字典',
+        path: '/system/param',
+        functionCode: 'SRS-FUNC-00011-7',
+        children: [
+          {
+            id: 'system-param-manage',
+            title: '参数管理',
+            path: '/system/param/manage',
+            functionCode: 'SRS-FUNC-00011-7.1'
+          },
+          {
+            id: 'system-param-code',
+            title: '编码规则配置',
+            path: '/system/param/code',
+            functionCode: 'SRS-FUNC-00011-7.2'
+          }
+        ]
+      },
+      {
+        id: 'system-approval',
+        title: '业务相关审批规则',
+        path: '/system/approval',
+        functionCode: 'SRS-FUNC-00011-8'
+      },
+      {
+        id: 'system-log',
+        title: '系统日志',
+        path: '/system/log',
+        functionCode: 'SRS-FUNC-00011-9'
+      },
+      {
+        id: 'system-user-log',
+        title: '用户日志',
+        path: '/system/user-log',
+        functionCode: 'SRS-FUNC-00011-10'
+      },
+      {
+        id: 'system-config',
+        title: '系统基础配置',
+        path: '/system/config',
+        functionCode: 'SRS-FUNC-00011-11'
+      },
+      {
+        id: 'system-backup-settings',
+        title: '系统备份设置',
+        path: '/system/backup-settings',
+        functionCode: 'SRS-FUNC-00011-12'
+      },
+      {
+        id: 'system-backup',
+        title: '数据备份',
+        path: '/system/backup',
+        functionCode: 'SRS-FUNC-00011-13'
+      }
+    ]
+  }
+]
+
+/**
+ * 根据路径查找菜单项
+ */
+export function findMenuByPath(path: string): MenuItem | null {
+  function search(items: MenuItem[]): MenuItem | null {
+    for (const item of items) {
+      if (item.path === path) {
+        return item
+      }
+      if (item.children) {
+        const found = search(item.children)
+        if (found) return found
+      }
+    }
+    return null
+  }
+  return search(mesMenuConfig)
+}
+
+/**
+ * 根据功能编号查找菜单项
+ */
+export function findMenuByFunctionCode(code: string): MenuItem | null {
+  function search(items: MenuItem[]): MenuItem | null {
+    for (const item of items) {
+      if (item.functionCode === code) {
+        return item
+      }
+      if (item.children) {
+        const found = search(item.children)
+        if (found) return found
+      }
+    }
+    return null
+  }
+  return search(mesMenuConfig)
+}
+
+/**
+ * 获取扁平化的菜单列表(用于权限配置)
+ */
+export function getFlatMenuList(): MenuItem[] {
+  const result: MenuItem[] = []
+  function flatten(items: MenuItem[]) {
+    for (const item of items) {
+      result.push(item)
+      if (item.children) {
+        flatten(item.children)
+      }
+    }
+  }
+  flatten(mesMenuConfig)
+  return result
+}

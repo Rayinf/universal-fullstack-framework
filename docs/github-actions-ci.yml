@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+      - develop/**
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: mes_local
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d mes_local"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      MES_PG_HOST: 127.0.0.1
+      MES_PG_PORT: 5432
+      MES_PG_DATABASE: mes_local
+      MES_PG_USER: postgres
+      MES_PG_PASSWORD: postgres
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install backend dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r backend/requirements.txt
+
+      - name: Backend compile
+        run: |
+          python -m py_compile \
+            backend/main.py \
+            backend/scripts/scaffold_backend_module.py \
+            scripts/scaffold_frontend_module.py \
+            scripts/scaffold_fullstack_module.py \
+            backend/tests/test_backend_scaffold.py \
+            backend/tests/test_frontend_scaffold.py \
+            backend/tests/test_fullstack_scaffold.py \
+            backend/tests/test_http_smoke.py \
+            backend/tests/test_menu_registry.py \
+            backend/tests/test_router_registry.py
+
+      - name: Backend tests
+        run: |
+          python -m unittest \
+            backend.tests.test_frontend_scaffold \
+            backend.tests.test_menu_registry \
+            backend.tests.test_modular_routes \
+            backend.tests.test_backend_scaffold \
+            backend.tests.test_router_registry \
+            backend.tests.test_fullstack_scaffold \
+            -v
+
+      - name: Backend HTTP smoke
+        run: python -m unittest backend.tests.test_http_smoke -v
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install frontend dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Build
+        run: npm run build-only

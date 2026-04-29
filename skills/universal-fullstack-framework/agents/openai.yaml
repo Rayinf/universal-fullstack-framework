@@ -1,0 +1,4 @@
+interface:
+  display_name: "Universal Fullstack Framework"
+  short_description: "Generic Vue3 + FastAPI framework delivery flow"
+  default_prompt: "Use $universal-fullstack-framework to implement a generic frontend-backend framework with stable system-management core and production-ready basics."

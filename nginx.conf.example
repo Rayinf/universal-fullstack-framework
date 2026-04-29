@@ -1,0 +1,73 @@
+server {
+    listen 80;
+    server_name your-domain.com;  # 替换为您的域名
+    
+    # 前端静态文件
+    location / {
+        root /path/to/your/dist;  # 替换为您的dist目录路径
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+    
+    # 登录接口单独代理（不使用/api前缀）
+    location /auth/oauth2/token {
+        proxy_pass http://127.0.0.1:8000/auth/oauth2/token;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        # 处理跨域
+        proxy_set_header Access-Control-Allow-Origin https://your-domain.com;
+        proxy_set_header Access-Control-Allow-Methods GET,POST,PUT,DELETE,OPTIONS;
+        proxy_set_header Access-Control-Allow-Headers DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization;
+        
+        # 处理OPTIONS请求
+        if ($request_method = 'OPTIONS') {
+            add_header Access-Control-Allow-Origin https://your-domain.com;
+            add_header Access-Control-Allow-Methods GET,POST,PUT,DELETE,OPTIONS;
+            add_header Access-Control-Allow-Headers DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization;
+            return 204;
+        }
+    }
+    
+    # 其他API接口代理（生产环境中直接代理，不使用/api前缀）
+    location ~ ^/(admin|user|customers|projects|sales|reports)/ {
+        proxy_pass http://127.0.0.1:8000$request_uri;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        # 处理跨域
+        proxy_set_header Access-Control-Allow-Origin https://your-domain.com;
+        proxy_set_header Access-Control-Allow-Methods GET,POST,PUT,DELETE,OPTIONS;
+        proxy_set_header Access-Control-Allow-Headers DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization;
+        
+        # 处理OPTIONS请求
+        if ($request_method = 'OPTIONS') {
+            add_header Access-Control-Allow-Origin https://your-domain.com;
+            add_header Access-Control-Allow-Methods GET,POST,PUT,DELETE,OPTIONS;
+            add_header Access-Control-Allow-Headers DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization;
+            return 204;
+        }
+    }
+    
+    # 静态资源缓存
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+        root /path/to/your/dist;  # 替换为您的dist目录路径
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}
+
+# HTTPS配置示例（可选）
+# server {
+#     listen 443 ssl;
+#     server_name your-domain.com;
+#     
+#     ssl_certificate /path/to/your/cert.pem;
+#     ssl_certificate_key /path/to/your/key.pem;
+#     
+#     # 其他配置与上面相同
+# } 
