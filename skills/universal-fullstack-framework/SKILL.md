@@ -1,6 +1,6 @@
 ---
 name: universal-fullstack-framework
-description: End-to-end workflow for building or refactoring a generic business web system into a reusable fullstack framework using Vue 3 + TypeScript frontend and Python FastAPI backend, then extending business modules on top of that framework. Use when you need to retain only core system-management capabilities, replace remote or mock APIs with local backend implementations, scaffold standard CRUD pages, keep frontend design standards consistent, align route/menu/API contracts, fix frontend-backend integration errors (404, redirect loop, import/HMR failures), and harden auth/JWT/CORS for production deployment.
+description: End-to-end workflow for starting, configuring, building, or refactoring a generic business web system into a reusable fullstack framework using Vue 3 + TypeScript frontend and Python FastAPI backend, then extending business modules on top of that framework. Use when you need to initialize a new project from requirements or manual configuration, set project name and business module plan, retain core system-management capabilities, replace remote or mock APIs with local backend implementations, scaffold standard CRUD pages, keep frontend design standards consistent, align route/menu/API contracts, fix frontend-backend integration errors (404, redirect loop, import/HMR failures), and harden auth/JWT/CORS for production deployment.
 ---
 
 # Universal Fullstack Framework
@@ -9,11 +9,64 @@ description: End-to-end workflow for building or refactoring a generic business 
 
 Use this skill to transform an existing business system into a reusable development framework that supports incremental feature modules on top of a stable core.
 
+It also covers the project-start phase: converting a requirements document or manual project configuration into a concrete framework manifest, initial module plan, app naming, documentation brief, and validation checklist.
+
 Prioritize a stable foundation first: authentication, system management, configuration, user-role-permission, logs, backup, and one baseline CRUD capability.
 
 After the core is stable, use the same workflow to build new business modules in small, reversible increments without breaking shared frontend patterns.
 
 ## Workflow
+
+### 0) Start project from requirements or manual configuration
+
+Use this step when the user is starting a new system from this framework or wants to rebrand/reconfigure the framework for a concrete project.
+
+Support two input modes:
+
+1. Requirements-driven mode
+   - Read the provided requirements document, product brief, screenshots, meeting notes, or user story list.
+   - Extract:
+     - project name
+     - app slug
+     - company or tenant name
+     - target users
+     - core pain points
+     - planned business modules
+     - module route prefixes
+     - minimum CRUD/API workflows
+     - acceptance criteria
+   - Ask only for missing values that block configuration.
+
+2. Manual configuration mode
+   - Accept explicit values from the user, such as:
+     - `app_name`
+     - `app_slug`
+     - `company_name`
+     - `description`
+     - `default_route`
+     - `enabled_modules`
+     - `planned_modules`
+     - initial module fields and API paths
+   - Use conservative defaults when the user omits non-critical values.
+
+Expected project-start outputs:
+
+- `project.manifest.yaml` or equivalent structured project manifest.
+- `docs/requirements.md` summarizing goals, users, pain points, module plan, and acceptance criteria.
+- `docs/agent-brief.md` giving future Agents the project-specific context.
+- Project naming configuration for frontend fallback title and backend OpenAPI title/description.
+- Initial module enablement plan in `src/config/frameworkConfig.ts`.
+- A validation checklist for the first baseline run.
+
+When a repo-local starter script exists, prefer it over hand-editing. Expected script name:
+
+```bash
+./backend/.venv/bin/python scripts/start_project.py --config project.manifest.yaml
+```
+
+If the starter script does not exist, create or update the manifest and documentation first, then make the smallest direct edits needed to apply project name and module configuration.
+
+For manifest schema, requirement extraction rules, file targets, and starter-script contract, read `references/project-start-playbook.md`.
 
 ### 1) Freeze scope and protect the core
 

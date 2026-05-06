@@ -5,11 +5,11 @@
 如果当前任务是“新增一个完整业务模块”，同时还要补后端接口、后端 router、前后端菜单与注册表，优先使用 [`docs/fullstack-module-template.md`](fullstack-module-template.md) 对应的一键入口：
 
 ```bash
-./backend/.venv/bin/python scripts/scaffold_fullstack_module.py quality_report \
-  --tag "质检报告" \
-  --api-base-path /manage/api/qualityReport \
-  --table-name quality_report_records \
-  --function-code SRS-FUNC-QUALITY-REPORT \
+./backend/.venv/bin/python scripts/scaffold_fullstack_module.py example_record \
+  --tag "示例记录" \
+  --api-base-path /manage/api/exampleRecord \
+  --table-name example_records \
+  --function-code APP-FUNC-EXAMPLE-RECORD \
   --with-store
 ```
 
@@ -28,39 +28,39 @@
 不带 Store：
 
 ```bash
-./backend/.venv/bin/python scripts/scaffold_frontend_module.py quality_report \
-  --tag "质检报告" \
-  --api-base-path /manage/api/qualityReport
+./backend/.venv/bin/python scripts/scaffold_frontend_module.py example_record \
+  --tag "示例记录" \
+  --api-base-path /manage/api/exampleRecord
 ```
 
 带 Store：
 
 ```bash
-./backend/.venv/bin/python scripts/scaffold_frontend_module.py quality_report \
-  --tag "质检报告" \
-  --api-base-path /manage/api/qualityReport \
+./backend/.venv/bin/python scripts/scaffold_frontend_module.py example_record \
+  --tag "示例记录" \
+  --api-base-path /manage/api/exampleRecord \
   --with-store
 ```
 
-指定为销售模块并写入权限码：
+指定菜单分组并写入权限码：
 
 ```bash
-./backend/.venv/bin/python scripts/scaffold_frontend_module.py quality_report \
-  --tag "质检报告" \
-  --api-base-path /manage/api/qualityReport \
-  --menu-parent sales \
-  --route-path /sales/quality-report \
-  --route-name sales-quality-report \
-  --function-code SRS-FUNC-QUALITY-REPORT
+./backend/.venv/bin/python scripts/scaffold_frontend_module.py example_record \
+  --tag "示例记录" \
+  --api-base-path /manage/api/exampleRecord \
+  --menu-parent system \
+  --route-path /system/example-record \
+  --route-name system-example-record \
+  --function-code APP-FUNC-EXAMPLE-RECORD
 ```
 
 默认输出到：
 
 ```text
 src/
-├── api/system/qualityReport.ts
-├── types/system/qualityReport.ts
-├── views/system-admin/QualityReportManagement.vue
+├── api/system/exampleRecord.ts
+├── types/system/exampleRecord.ts
+├── views/system-admin/ExampleRecordManagement.vue
 ├── router/scaffoldedRoutes.ts        # 默认自动生成或追加
 ├── config/scaffoldMenuRegistry.ts    # 默认自动生成或追加
 ├── ../backend/app/modules/system_admin/scaffold_menu_registry.py
@@ -94,7 +94,7 @@ src/
 - `--with-store`
   - 同时生成 Pinia Composition Store，并让页面接入 Store
 - `--menu-parent`
-  - 菜单挂载分组，支持 `root/system/sales/production`，默认 `system`
+  - 菜单挂载分组，支持 `root/system/sales/production`，默认 `system`；`sales`、`production` 是仓库内置示例业务桶，可按实际项目替换
 - `--route-path`
   - 前端路由路径，默认根据 `menu-parent + module_name` 自动生成，例如 `/system/quality-report`
 - `--route-name`

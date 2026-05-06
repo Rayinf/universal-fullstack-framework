@@ -10,31 +10,31 @@
 
 ## 1. 推荐命令
 
-系统管理模块：
+系统管理分组示例：
 
 ```bash
-./backend/.venv/bin/python scripts/scaffold_fullstack_module.py quality_report \
-  --tag "质检报告" \
-  --api-base-path /manage/api/qualityReport \
-  --table-name quality_report_records \
+./backend/.venv/bin/python scripts/scaffold_fullstack_module.py example_record \
+  --tag "示例记录" \
+  --api-base-path /manage/api/exampleRecord \
+  --table-name example_records \
   --menu-parent system \
-  --route-path /system/quality-report \
-  --route-name system-quality-report \
-  --function-code SRS-FUNC-QUALITY-REPORT \
+  --route-path /system/example-record \
+  --route-name system-example-record \
+  --function-code APP-FUNC-EXAMPLE-RECORD \
   --with-store
 ```
 
-生产模块：
+示例业务分组：
 
 ```bash
-./backend/.venv/bin/python scripts/scaffold_fullstack_module.py quality_report \
-  --tag "质检报告" \
-  --api-base-path /manage/api/qualityReport \
-  --table-name quality_report_records \
+./backend/.venv/bin/python scripts/scaffold_fullstack_module.py example_record \
+  --tag "示例记录" \
+  --api-base-path /manage/api/exampleRecord \
+  --table-name example_records \
   --menu-parent production \
-  --route-path /production/quality-report \
-  --route-name production-quality-report \
-  --function-code SRS-FUNC-QUALITY-REPORT \
+  --route-path /production/example-record \
+  --route-name production-example-record \
+  --function-code APP-FUNC-EXAMPLE-RECORD \
   --menu-icon DataAnalysis \
   --with-store
 ```
@@ -65,6 +65,8 @@
 ## 3. 默认目录映射
 
 脚手架会根据 `--menu-parent` 自动给前端目录分桶，必要时可再手工覆盖：
+
+`sales`、`production` 是当前仓库自带的示例业务桶，代表可替换的业务分组命名。
 
 - `root`
   - `api/type/store`: `system`

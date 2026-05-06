@@ -58,8 +58,8 @@ class CoreHelpersTestCase(unittest.TestCase):
     )
     with self.assertRaises(RuntimeError) as ctx:
       validate_security_config(config)
-    self.assertIn('MES_JWT_SECRET 长度必须 >= 32', str(ctx.exception))
-    self.assertIn('MES_CORS_ORIGINS', str(ctx.exception))
+    self.assertIn('APP_JWT_SECRET 长度必须 >= 32', str(ctx.exception))
+    self.assertIn('APP_CORS_ORIGINS', str(ctx.exception))
 
   def test_auth_guard_middleware_rejects_invalid_token(self) -> None:
     middleware = create_auth_guard_middleware(

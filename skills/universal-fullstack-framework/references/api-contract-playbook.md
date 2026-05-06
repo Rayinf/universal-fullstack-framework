@@ -38,7 +38,7 @@ Capture for each endpoint:
 
 ## 5) Production hardening checklist
 
-- `MES_ENV=production` (or equivalent env).
+- Production environment enabled, for example `APP_ENV=production` or the repository-compatible legacy environment key used by the current codebase.
 - Strong JWT secret configured.
 - CORS whitelist configured and wildcard disabled.
 - Access/refresh expiry configured.

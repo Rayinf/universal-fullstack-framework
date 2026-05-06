@@ -16,22 +16,22 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_DB: mes_local
+          POSTGRES_DB: app_local
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres -d mes_local"
+          --health-cmd "pg_isready -U postgres -d app_local"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 20
     env:
-      MES_PG_HOST: 127.0.0.1
-      MES_PG_PORT: 5432
-      MES_PG_DATABASE: mes_local
-      MES_PG_USER: postgres
-      MES_PG_PASSWORD: postgres
+      APP_PG_HOST: 127.0.0.1
+      APP_PG_PORT: 5432
+      APP_PG_DATABASE: app_local
+      APP_PG_USER: postgres
+      APP_PG_PASSWORD: postgres
 
     steps:
       - name: Checkout

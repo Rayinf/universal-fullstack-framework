@@ -92,21 +92,21 @@ def should_require_auth(path: str) -> bool:
 def validate_security_config(config: SecurityConfig) -> None:
   if config.app_env != 'production':
     if config.jwt_secret_is_ephemeral:
-      print('[WARN] MES_JWT_SECRET 未配置，当前使用临时密钥，仅适用于开发环境。')
+      print('[WARN] APP_JWT_SECRET 未配置，当前使用临时密钥，仅适用于开发环境。')
     return
 
   errors: list[str] = []
   jwt_secret_lower = config.raw_jwt_secret.lower()
   if config.jwt_secret_is_ephemeral:
-    errors.append('生产环境必须配置 MES_JWT_SECRET。')
+    errors.append('生产环境必须配置 APP_JWT_SECRET。')
   if len(config.raw_jwt_secret) < MIN_JWT_SECRET_LENGTH:
-    errors.append(f'MES_JWT_SECRET 长度必须 >= {MIN_JWT_SECRET_LENGTH}。')
+    errors.append(f'APP_JWT_SECRET 长度必须 >= {MIN_JWT_SECRET_LENGTH}。')
   if jwt_secret_lower in WEAK_JWT_SECRET_VALUES:
-    errors.append('MES_JWT_SECRET 过于简单，请使用高强度随机字符串。')
+    errors.append('APP_JWT_SECRET 过于简单，请使用高强度随机字符串。')
   if '*' in config.cors_allow_origins:
-    errors.append('生产环境禁止在 MES_CORS_ORIGINS 中配置通配符 *。')
+    errors.append('生产环境禁止在 APP_CORS_ORIGINS 中配置通配符 *。')
   if not config.cors_allow_origins and not config.cors_allow_origin_regex:
-    errors.append('生产环境必须配置 MES_CORS_ORIGINS 或 MES_CORS_ORIGIN_REGEX。')
+    errors.append('生产环境必须配置 APP_CORS_ORIGINS 或 APP_CORS_ORIGIN_REGEX。')
 
   if errors:
     details = '; '.join(errors)

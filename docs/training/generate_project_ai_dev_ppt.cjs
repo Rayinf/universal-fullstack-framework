@@ -4,9 +4,9 @@ const PptxGenJS = require('pptxgenjs');
 const pptx = new PptxGenJS();
 pptx.layout = 'LAYOUT_16x9';
 pptx.author = 'OpenAI Codex';
-pptx.company = 'MES Training';
-pptx.subject = 'MES project AI collaboration overview';
-pptx.title = 'MES 项目基座与 AI 协作开发介绍';
+pptx.company = 'Universal Fullstack Framework Training';
+pptx.subject = 'Universal fullstack framework AI collaboration overview';
+pptx.title = 'Universal Fullstack Framework 与 AI 协作开发介绍';
 pptx.lang = 'zh-CN';
 pptx.theme = {
   headFontFace: 'Microsoft YaHei',
@@ -290,7 +290,7 @@ function addDarkCoverDecor(slide) {
   const slide = pptx.addSlide();
   fullBg(slide, C.dark);
   addDarkCoverDecor(slide);
-  slide.addText('MES 项目基座与 AI 协作开发介绍', {
+  slide.addText('Universal Fullstack Framework 与 AI 协作开发介绍', {
     x: 0.72,
     y: 1.08,
     w: 6.1,
@@ -343,7 +343,7 @@ function addDarkCoverDecor(slide) {
     label: 'MODULE',
     title: 'sales',
     titleColor: C.white,
-    body: '销售示范业务域',
+    body: '示例业务域 A',
     bodyColor: 'DAE7FF',
     bg: '27357A',
     line: '27357A',
@@ -353,7 +353,7 @@ function addDarkCoverDecor(slide) {
     label: 'MODULE',
     title: 'production',
     titleColor: C.white,
-    body: '生产执行示范业务域',
+    body: '示例业务域 B',
     bodyColor: 'DCE8FF',
     bg: '27357A',
     line: '27357A',
@@ -393,7 +393,7 @@ function addDarkCoverDecor(slide) {
     label: 'STAGE',
     title: '现在做到哪一步',
     titleSize: 17,
-    body: '基座已经搭好了。\n销售和生产两条示例链也能跑。\n现在重点是继续扩功能。',
+    body: '基座已经搭好了。\n两条示例业务链也能跑。\n现在重点是继续扩功能。',
     bodySize: 10.8,
   });
   addCard(slide, 3.55, 3.55, 2.6, 1.58, {
@@ -409,7 +409,7 @@ function addDarkCoverDecor(slide) {
     label: 'NOT YET',
     title: '现在还别误会的部分',
     titleSize: 17,
-    body: 'task / planning / process / quality 还没正式启用。\n现在不是“全部做完”，而是“能继续扩”。',
+    body: 'task / planning / process / quality 处于预留状态。\n现在重点是稳定基座并继续扩展。',
     bodySize: 10.4,
   });
   addFooter(slide, 2);
@@ -529,7 +529,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'CURRENT STATE', '这个仓库现在到底是什么', '这页专门纠正旧印象：不要再把它当成“老示例仓库”。');
+  addTitleBlock(slide, 'CURRENT STATE', '这个仓库现在到底是什么', '这页建立当前框架定位：可扩展业务系统基座。');
   addCard(slide, 0.72, 2.02, 3.95, 2.28, {
     accent: C.amber,
     label: 'OLD IMPRESSION',
@@ -588,7 +588,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.soft },
     line: { color: C.line, width: 1 },
   });
-  slide.addText('结论：要以当前代码和启用配置为准，不要再以旧印象来理解这个仓库。', {
+  slide.addText('结论：要以当前代码和启用配置为准来理解这个仓库。', {
     x: 1.35,
     y: 5.14,
     w: 7.3,
@@ -639,7 +639,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.dark },
     line: { color: C.dark, transparency: 100 },
   });
-  slide.addText('一个功能打不开，常见不是页面写错，而是前后端和权限这条线没有对上。', {
+  slide.addText('一个功能打不开，常见原因是前后端和权限这条线没有对上。', {
     x: 1.7,
     y: 4.64,
     w: 6.6,
@@ -657,7 +657,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'BASE LAYERS', '这个基座其实分成 5 层', '后面新模块能接得快，不是因为 AI 会“魔法生成”，而是这些公共层已经先搭好了。');
+  addTitleBlock(slide, 'BASE LAYERS', '这个基座其实分成 5 层', '后面新模块能接得快，原因是这些公共层已经先搭好了。');
   const layerRows = [
     ['LAYER 01', '页面壳和导航', '统一布局、侧边菜单、顶部栏、移动端容器。新页面不用从头搭外框。', C.teal],
     ['LAYER 02', '登录和权限', '登录态、角色、菜单权限、页面拦截。很多“能不能进页面”的判断已经在基座里。', C.amber],
@@ -723,7 +723,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'FRONTEND BASE', '前端基座已经替你做好哪些事', '如果你主要做前端，很多常用能力已经在，不是从空白页面开始。');
+  addTitleBlock(slide, 'FRONTEND BASE', '前端基座已经提供哪些能力', '如果你主要做前端，很多常用能力已经可复用。');
   addCard(slide, 0.72, 2.02, 4.0, 1.18, {
     accent: C.teal,
     label: 'FRONTEND 01',
@@ -765,7 +765,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.soft },
     line: { color: C.line, width: 1 },
   });
-  slide.addText('大多数前端新增页，不是从零做页面，而是在这套公共写法上把业务字段和交互补完整。', {
+  slide.addText('大多数前端新增页是在这套公共写法上把业务字段和交互补完整。', {
     x: 1.3,
     y: 5.01,
     w: 7.4,
@@ -783,7 +783,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'BACKEND BASE', '后端基座已经替你做好哪些事', '如果你主要做后端，也不是从空白 FastAPI 项目开始。');
+  addTitleBlock(slide, 'BACKEND BASE', '后端基座已经提供哪些能力', '如果你主要做后端，现有 FastAPI 基座已经可复用。');
   addCard(slide, 0.72, 2.02, 4.0, 1.18, {
     accent: C.teal,
     label: 'BACKEND 01',
@@ -825,7 +825,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.soft },
     line: { color: C.line, width: 1 },
   });
-  slide.addText('大多数后端新增模块，重点不是重搭框架，而是在这套结构里补业务表、接口和服务逻辑。', {
+  slide.addText('大多数后端新增模块，重点是在这套结构里补业务表、接口和服务逻辑。', {
     x: 1.28,
     y: 5.01,
     w: 7.42,
@@ -843,7 +843,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'BASE RULES', '这套基座里，哪些规则已经固定下来了', '这些不是“建议”，而是后面继续开发时默认要遵守的公共约定。');
+  addTitleBlock(slide, 'BASE RULES', '这套基座里，哪些规则已经固定下来了', '这些是后面继续开发时默认要遵守的公共约定。');
   addCard(slide, 0.72, 2.02, 4.0, 1.18, {
     accent: C.teal,
     label: 'RED LINE 01',
@@ -865,7 +865,7 @@ function addDarkCoverDecor(slide) {
     label: 'RED LINE 03',
     title: '启用边界看 frameworkConfig',
     titleSize: 17,
-    body: '哪些业务域现在能用，以 frameworkConfig.ts 为准；没启用的前缀不要直接当正式入口用。',
+    body: '哪些业务域现在能用，以 frameworkConfig.ts 为准；启用前缀以配置为准。',
     bodySize: 10.8,
   });
   addCard(slide, 5.02, 3.45, 4.0, 1.18, {
@@ -873,7 +873,7 @@ function addDarkCoverDecor(slide) {
     label: 'RED LINE 04',
     title: '新增模块先 scaffold，再跑 baseline',
     titleSize: 17,
-    body: 'seed 放 init_db；共享改动要跑 baseline；新增模块优先 scaffold，不要手工复制老模块。',
+    body: 'seed 放 init_db；共享改动要跑 baseline；新增模块优先 scaffold。',
     bodySize: 10.8,
   });
   slide.addShape(pptx.ShapeType.roundRect, {
@@ -885,7 +885,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.soft },
     line: { color: C.line, width: 1 },
   });
-  slide.addText('新功能能不能用，常常不是代码没写完，而是这四处没有一起改。', {
+  slide.addText('新功能能不能用，常常取决于这四处是否一起改。', {
     x: 1.3,
     y: 5.01,
     w: 7.4,
@@ -953,17 +953,17 @@ function addDarkCoverDecor(slide) {
   addCard(slide, 3.65, 2.0, 2.58, 2.15, {
     accent: C.amber,
     label: 'SALES',
-    title: '销售示例域',
+    title: '示例业务域 A',
     titleSize: 18,
-    body: '产品 -> 报价 -> 合同 -> 回款 -> 佣金。\n\n它是在演示：这套基座能接一条完整业务链。',
+    body: '主数据 -> 业务单据 -> 审批/状态流转 -> 看板。\n\n它是在演示：这套基座能接一条完整业务链。',
     bodySize: 11.5,
   });
   addCard(slide, 6.58, 2.0, 2.58, 2.15, {
     accent: C.mint,
     label: 'PRODUCTION',
-    title: '生产示例域',
+    title: '示例业务域 B',
     titleSize: 18,
-    body: '工单 -> 报工 -> 入库 -> 看板。\n\n它是在演示：另一条业务线也能共用同一套底座。',
+    body: '资源配置 -> 执行记录 -> 结果归档 -> 看板。\n\n它是在演示：另一条业务线也能共用同一套底座。',
     bodySize: 11.5,
   });
   slide.addShape(pptx.ShapeType.roundRect, {
@@ -975,7 +975,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.soft },
     line: { color: C.line, width: 1 },
   });
-  slide.addText('这三块不是为了展示页面好看，而是在告诉你：同一套底座可以继续接更多模块。', {
+  slide.addText('这三块在展示：同一套底座可以继续接更多模块。', {
     x: 1.18,
     y: 4.63,
     w: 7.55,
@@ -1062,7 +1062,7 @@ function addDarkCoverDecor(slide) {
     label: 'MODE 04',
     title: '修联动问题或做重构',
     titleSize: 17,
-    body: '重点不是某个页面，而是 route、menu、permission、registry、baseline 这一串。',
+    body: '重点是 route、menu、permission、registry、baseline 这一串。',
     bodySize: 11.5,
   });
   slide.addShape(pptx.ShapeType.roundRect, {
@@ -1206,7 +1206,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'LINKAGE CHAIN', '新功能接入，不是只改一个页面', '一个功能真能用，通常不止改一个页面，而是下面这一串要一起动。');
+  addTitleBlock(slide, 'LINKAGE CHAIN', '新功能接入会联动多个文件', '一个功能真能用，通常是下面这一串要一起动。');
   addCard(slide, 0.72, 2.08, 2.45, 2.0, {
     accent: C.teal,
     label: 'FRONTEND',
@@ -1258,7 +1258,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'AI ROLE', 'AI 在这个项目里应该扮演什么角色', '在这个项目里，AI 更像能干活的工程搭子，不是自己拍板的产品经理。');
+  addTitleBlock(slide, 'AI ROLE', 'AI 在这个项目里应该扮演什么角色', '在这个项目里，AI 更像能干活的工程协作者。');
   addCard(slide, 0.65, 2.0, 4.0, 2.55, {
     accent: C.teal,
     label: '适合 AI',
@@ -1270,7 +1270,7 @@ function addDarkCoverDecor(slide) {
   addCard(slide, 5.0, 2.0, 4.0, 2.55, {
     accent: C.amber,
     label: '不适合 AI',
-    title: '不要让 AI 这么做',
+    title: '低质量用法',
     titleSize: 22,
     body: '• 不看规则和现状就直接改\n• 绕开脚手架，直接往主文件里堆\n• 不跑 baseline 就说做完了\n• 把占位字段当成正式业务定义',
     bodySize: 12,
@@ -1332,7 +1332,7 @@ function addDarkCoverDecor(slide) {
     });
   };
   drawDecision(2.1, C.teal, '第一层', '规则已经很明确', '像脚手架、接 registry、对齐 permission、跑 baseline，这些直接让 AI 做。');
-  drawDecision(3.18, C.amber, '第二层', '大方向对，但有几种选法', '比如挂 sales 还是 production、菜单怎么叫、字段要不要收缩，先让 AI 给建议。');
+  drawDecision(3.18, C.amber, '第二层', '大方向对，但有几种选法', '比如挂哪个业务桶、菜单怎么叫、字段是否收缩，先让 AI 给建议。');
   drawDecision(4.26, C.mint, '第三层', '会改业务意思或系统边界', '比如真实字段、表结构、一级模块、登录和权限主干，这种必须人拍板。');
   addFooter(slide, 19);
 }
@@ -1344,7 +1344,7 @@ function addDarkCoverDecor(slide) {
   addTitleBlock(slide, 'AI STARTUP', '同事第一次让 AI 接手时，该怎么做', '别一上来就说“帮我改”。先把项目规则和当前现状给 AI。');
   addStep(slide, 0.62, 2.15, 2.6, 1.15, 1, '先读规则', 'AGENTS、CLAUDE、training、对应 skill。先让 AI 知道这套项目按什么规矩干活。', C.teal);
   addStep(slide, 3.7, 2.15, 2.6, 1.15, 2, '再读入口', 'frameworkConfig、router、MainLayout、menu.py。先给 AI 一张系统地图。', C.amber);
-  addStep(slide, 6.78, 2.15, 2.6, 1.15, 3, '最后再给任务', '说清要改什么、不要改什么、挂到哪里、做完怎么验。', C.mint);
+  addStep(slide, 6.78, 2.15, 2.6, 1.15, 3, '最后再给任务', '说清目标、边界、挂载点和验收方式。', C.mint);
   addArrow(slide, 3.28, 2.6, 0.3, C.teal);
   addArrow(slide, 6.36, 2.6, 0.3, C.amber);
   slide.addShape(pptx.ShapeType.roundRect, {
@@ -1402,7 +1402,7 @@ function addDarkCoverDecor(slide) {
   addCard(slide, 5.02, 3.45, 4.0, 1.18, {
     accent: C.teal,
     label: 'WHAT IT IS NOT',
-    title: 'Skill 不是魔法插件',
+    title: 'Skill 提供工作流',
     titleSize: 17,
     body: '它不会代替人来决定真实业务语义，也不会跳过项目现有的脚手架、权限和验证规则。',
     bodySize: 11.0,
@@ -1416,7 +1416,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.soft },
     line: { color: C.line, width: 1 },
   });
-  slide.addText('一句话记住：skill 的价值，不是让 AI 更会聊天，而是先让它按对的方法干活。', {
+  slide.addText('记住：skill 的价值，是让 AI 先按对的方法干活。', {
     x: 1.42,
     y: 4.99,
     w: 7.15,
@@ -1434,7 +1434,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'PROJECT SKILL', '这个项目专用的 Skill', '这不是给 AI 加一个新名词，而是让它按这套基座的工法做事。');
+  addTitleBlock(slide, 'PROJECT SKILL', '这个项目专用的 Skill', '它让 AI 按这套基座的工法做事。');
   slide.addShape(pptx.ShapeType.roundRect, {
     x: 0.72,
     y: 1.86,
@@ -1489,7 +1489,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.dark },
     line: { color: C.dark, transparency: 100 },
   });
-  slide.addText('它不是替你决定业务，而是把“怎么沿着现有基座继续做”先写成 AI 必须遵守的流程。', {
+  slide.addText('它把“怎么沿着现有基座继续做”先写成 AI 必须遵守的流程。', {
     x: 1.25,
     y: 4.74,
     w: 7.55,
@@ -1507,10 +1507,10 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'SKILL FLOW', '这个专属 Skill 用了以后，AI 会按什么顺序做', '它不是“给 AI 加一个名字”而已，而是会让 AI 默认按这条顺序推进。');
+  addTitleBlock(slide, 'SKILL FLOW', '这个专属 Skill 会引导 AI 按什么顺序做', '它会让 AI 默认按这条顺序推进。');
   addStep(slide, 0.68, 2.05, 2.62, 0.9, 1, '先保住基座', '先确认哪些是公共底座，尽量别为了新需求把主干改乱。', C.teal);
-  addStep(slide, 3.4, 2.05, 2.62, 0.9, 2, '先对齐前后端合同', '先看 route、menu、API、字段、返回格式是不是一一对应。', C.amber);
-  addStep(slide, 6.12, 2.05, 2.62, 0.9, 3, '优先接本地后端', '优先走 FastAPI + PostgreSQL + seed，而不是先靠 mock 顶着。', C.mint);
+  addStep(slide, 3.4, 2.05, 2.62, 0.9, 2, '先对齐前后端契约', '先看 route、menu、API、字段、返回格式是否一一对应。', C.amber);
+  addStep(slide, 6.12, 2.05, 2.62, 0.9, 3, '优先接本地后端', '优先走 FastAPI + PostgreSQL + seed。', C.mint);
   addStep(slide, 2.0, 3.45, 2.9, 0.9, 4, '新增模块先用脚手架', '前后端都要改时优先 fullstack scaffold，其次再拆 frontend / backend。', C.teal);
   addStep(slide, 5.1, 3.45, 2.9, 0.9, 5, '最后统一验证', '共享改动优先跑 baseline，再看 smoke 和关键流程有没有通过。', C.amber);
   slide.addShape(pptx.ShapeType.roundRect, {
@@ -1554,7 +1554,7 @@ function addDarkCoverDecor(slide) {
     label: 'RISK 02',
     title: '数据和演示风险',
     titleSize: 17,
-    body: 'seed 不是随便塞几条数据，而是要能支撑一整条业务链跑起来，别只在前端写假数据。',
+    body: 'seed 要能支撑一整条业务链跑起来，演示数据优先落在后端初始化流程。',
     bodySize: 10.8,
   });
   addCard(slide, 0.72, 3.45, 4.0, 1.18, {
@@ -1664,8 +1664,8 @@ function addDarkCoverDecor(slide) {
   fullBg(slide, C.cream);
   addTitleBlock(slide, 'SKILL TRANSLATION', '把这份 Skill 翻成人话，可以怎么理解', '把工程说明书翻成同事更容易听懂的中文版本。');
   const translatedRows = [
-    ['01', '先把基座稳住', '先保住认证、系统管理、权限、日志和一条基础 CRUD，不要一上来就把主干改乱。', C.teal],
-    ['02', '先把前后端对齐', '先把前端 API 和后端接口一一对应，缺哪个补哪个，不要两边各猜各的。', C.amber],
+    ['01', '先把基座稳住', '先保住认证、系统管理、权限、日志和一条基础 CRUD，保护主干稳定。', C.teal],
+    ['02', '先把前后端对齐', '先把前端 API 和后端接口一一对应，缺哪个补哪个，按契约对齐。', C.amber],
     ['03', '优先走本地真实链路', 'remote / mock 能换就换，优先接本地 FastAPI + PostgreSQL + seed。', C.mint],
     ['04', '统一开发写法', '前端走统一 request / store / CRUD 模式，后端走模块化分层和注册机制。', C.teal],
     ['05', '小步扩展，小步验证', '每次先做一段最小可用，做完就验，再继续往下做。', C.amber],
@@ -1788,7 +1788,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'BASELINE FILES', 'baseline 里每个校验脚本分别在查什么', '不是“随便跑个脚本”，而是在查骨架、注册、接口和交付链路。');
+  addTitleBlock(slide, 'BASELINE FILES', 'baseline 里每个校验脚本分别在查什么', '它在查骨架、注册、接口和交付链路。');
   const baselineChecks = [
     ['backend/main.py', '后端主入口语法检查', C.teal],
     ['test_backend_scaffold.py', '后端脚手架生成与路由注册测试', C.amber],
@@ -1925,7 +1925,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.soft },
     line: { color: C.line, width: 1 },
   });
-  slide.addText('大多数标准新增功能，默认先选 fullstack scaffold，不要上来就复制旧模块。', {
+  slide.addText('大多数标准新增功能，默认先选 fullstack scaffold。', {
     x: 1.85,
     y: 4.74,
     w: 6.35,
@@ -1946,29 +1946,29 @@ function addDarkCoverDecor(slide) {
   addTitleBlock(
     slide,
     'BOUNDARIES',
-    '当前边界与不要误判的点',
+    '当前边界与判断要点',
     '这页专门提醒：哪些看起来像“已经好了”，其实还没有。',
   );
   addCard(slide, 0.72, 2.02, 4.0, 1.18, {
     accent: C.teal,
     label: 'MISJUDGMENT 01',
-    title: '看到 sales / production，不等于完整 MES 做完',
+    title: 'sales / production 是示例业务桶',
     titleSize: 16,
-    body: '它们是在演示这套基座怎么扩，不代表所有真实业务规则都已经定好了。',
+    body: '它们在演示这套基座怎么扩，真实业务规则可按项目替换。',
     bodySize: 11.2,
   });
   addCard(slide, 5.02, 2.02, 4.0, 1.18, {
     accent: C.amber,
     label: 'MISJUDGMENT 02',
-    title: '菜单能看见，不等于权限一定正确',
+    title: '菜单可见属于展示状态',
     titleSize: 16,
-    body: '还要继续看 functionCode、permission、allowedMenuIds 和页面拦截是不是都对上。',
+    body: '还要继续看 functionCode、permission、allowedMenuIds 和页面拦截是否对上。',
     bodySize: 11.2,
   });
   addCard(slide, 0.72, 3.45, 4.0, 1.18, {
     accent: C.mint,
     label: 'MISJUDGMENT 03',
-    title: '脚手架生成完，不等于模块可以交付',
+    title: '脚手架生成的是最小骨架',
     titleSize: 16,
     body: '生成出来的只是最小骨架；占位字段、文案、SQL、seed 都还要换成正式业务内容。',
     bodySize: 11.2,
@@ -1976,9 +1976,9 @@ function addDarkCoverDecor(slide) {
   addCard(slide, 5.02, 3.45, 4.0, 1.18, {
     accent: C.teal,
     label: 'MISJUDGMENT 04',
-    title: '仓库里有 mock 文件，不等于当前默认走 mock',
+    title: '联调默认走本地后端',
     titleSize: 16,
-    body: '现在培训和联调默认应该走本地 FastAPI + PostgreSQL + seed，不是走 mock。',
+    body: '现在培训和联调默认走本地 FastAPI + PostgreSQL + seed。',
     bodySize: 11.2,
   });
   slide.addShape(pptx.ShapeType.roundRect, {
@@ -1990,7 +1990,7 @@ function addDarkCoverDecor(slide) {
     fill: { color: C.soft },
     line: { color: C.line, width: 1 },
   });
-  slide.addText('拿不准当前边界时，先看 frameworkConfig.ts、router、menu.py 和 verify 结果，不要只凭感觉。', {
+  slide.addText('当前边界以 frameworkConfig.ts、router、menu.py 和 verify 结果为准。', {
     x: 1.28,
     y: 5.01,
     w: 7.42,
@@ -2008,7 +2008,7 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'BASELINE', '代码写完，不等于任务完成', '页面能打开，只算开始；baseline 过了，才算能交。');
+  addTitleBlock(slide, 'BASELINE', '代码写完还要跑验证', '页面能打开后，还要通过约定验证。');
   addStep(slide, 0.72, 2.05, 2.8, 0.8, 1, '先看 Python 语法和脚本', '不过：一运行就会报 import 或脚本错误。', C.teal);
   addStep(slide, 3.62, 2.05, 2.8, 0.8, 2, '确认后端公共能力', '不过：脚手架、注册点和模块路由可能被带坏。', C.amber);
   addStep(slide, 6.52, 2.05, 2.8, 0.8, 3, '确认接口能通', '不过：登录、菜单、refresh 和 CRUD 这条线会断。', C.mint);
@@ -2041,8 +2041,8 @@ function addDarkCoverDecor(slide) {
 {
   const slide = pptx.addSlide();
   fullBg(slide, C.cream);
-  addTitleBlock(slide, 'STANDARD FLOW', '和 AI 协作时的标准流程', '这页不是讲模块怎么接，而是讲你和 AI 怎么配合不跑偏。');
-  addStep(slide, 0.68, 2.08, 2.62, 0.9, 1, '先说清任务', '说清这次要做什么、不要改什么、验收到什么程度。', C.teal);
+  addTitleBlock(slide, 'STANDARD FLOW', '和 AI 协作时的标准流程', '这页讲你和 AI 怎么配合保持工程链路稳定。');
+  addStep(slide, 0.68, 2.08, 2.62, 0.9, 1, '先说清任务', '说清这次目标、边界、验收到什么程度。', C.teal);
   addStep(slide, 3.4, 2.08, 2.62, 0.9, 2, '先把规则喂给 AI', '先读 AGENTS、training 文档和对应 skill。', C.amber);
   addStep(slide, 6.12, 2.08, 2.62, 0.9, 3, '再让 AI 读现状', '先看当前启用边界、路由、菜单和关键入口。', C.mint);
   addStep(slide, 2.0, 3.45, 2.9, 0.9, 4, '再开始改', '标准新增模块优先走 scaffold，局部问题再手工修改。', C.teal);
@@ -2074,7 +2074,7 @@ function addDarkCoverDecor(slide) {
     label: 'CASE 03',
     title: '模块生成后不完整',
     titleSize: 16,
-    body: '先确认脚手架是不是走对了，再把占位字段、文案和 SQL 换成真的。',
+    body: '先确认脚手架是否走对了，再把占位字段、文案和 SQL 换成真的。',
   });
   addCard(slide, 5.0, 3.62, 4.02, 1.3, {
     accent: C.teal,
@@ -2093,7 +2093,7 @@ function addDarkCoverDecor(slide) {
   addTitleBlock(slide, 'PROMPT TEMPLATE', '给 AI 一个“能干活”的任务描述', '想让 AI 真干活，至少把这 5 件事交代清楚。');
   const promptTiles = [
     ['01', '目标', '这次到底要做什么', C.teal],
-    ['02', '边界', '哪些东西不要改', C.amber],
+    ['02', '边界', '哪些东西保持稳定', C.amber],
     ['03', '挂载点', '挂到哪里，路由和功能码是什么', C.mint],
     ['04', '先读', '先读哪些规则和关键入口', C.teal],
     ['05', '验收', '做完跑什么验证，要汇报什么结果', C.amber],
@@ -2169,7 +2169,7 @@ function addDarkCoverDecor(slide) {
     color: C.mint,
     margin: 0,
   });
-  slide.addText('请基于当前 MES 基座处理这个任务：\n- 目标：新增 xxx 模块 / 修复 xxx 联动问题\n- 边界：不要改登录主干，不要改未启用业务域\n- 挂载点：放到 production，路由前缀 xxx，functionCode xxx\n- 先读：AGENTS.md、frameworkConfig.ts、router、menu.py\n- 验收：运行 baseline，并说明修改文件、验证结果和剩余风险', {
+  slide.addText('请基于当前 Universal Fullstack Framework 处理这个任务：\n- 目标：新增 xxx 模块 / 修复 xxx 联动问题\n- 边界：登录主干保持稳定，未启用业务域保持关闭\n- 挂载点：放到 system，路由前缀 xxx，functionCode xxx\n- 先读：AGENTS.md、frameworkConfig.ts、router、menu.py\n- 验收：运行 baseline，并说明修改文件、验证结果和剩余风险', {
     x: 1.0,
     y: 3.66,
     w: 7.95,
@@ -2223,7 +2223,7 @@ function addDarkCoverDecor(slide) {
     color: C.mint,
     margin: 0,
   });
-  slide.addText('这套项目不是从零写页面，而是沿着现有基座继续加东西。', {
+  slide.addText('这套项目沿着现有基座继续加东西。', {
     x: 0.8,
     y: 1.58,
     w: 8.2,

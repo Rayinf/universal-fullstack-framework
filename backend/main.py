@@ -31,26 +31,31 @@ UPLOADS_DIR.mkdir(exist_ok=True)
 
 load_env_files(PROJECT_ROOT / '.env', BACKEND_ROOT / '.env')
 
+
+def env_value(name: str, legacy_name: str, default: str = '') -> str:
+  return os.getenv(name, os.getenv(legacy_name, default)).strip()
+
+
 DB_DRIVER = 'postgres'
-PG_DSN = os.getenv('MES_PG_DSN', '').strip()
-PG_HOST = os.getenv('MES_PG_HOST', '127.0.0.1').strip()
-PG_PORT = int(os.getenv('MES_PG_PORT', '5432'))
-PG_DB = os.getenv('MES_PG_DATABASE', 'mes_local').strip()
-PG_USER = os.getenv('MES_PG_USER', 'postgres').strip()
-PG_PASSWORD = os.getenv('MES_PG_PASSWORD', '').strip()
-APP_ENV = os.getenv('MES_ENV', os.getenv('ENV', 'development')).strip().lower()
-RAW_JWT_SECRET = os.getenv('MES_JWT_SECRET', '').strip()
+PG_DSN = env_value('APP_PG_DSN', 'MES_PG_DSN')
+PG_HOST = env_value('APP_PG_HOST', 'MES_PG_HOST', '127.0.0.1')
+PG_PORT = int(env_value('APP_PG_PORT', 'MES_PG_PORT', '5432'))
+PG_DB = env_value('APP_PG_DATABASE', 'MES_PG_DATABASE', 'app_local')
+PG_USER = env_value('APP_PG_USER', 'MES_PG_USER', 'postgres')
+PG_PASSWORD = env_value('APP_PG_PASSWORD', 'MES_PG_PASSWORD')
+APP_ENV = env_value('APP_ENV', 'MES_ENV', os.getenv('ENV', 'development')).lower()
+RAW_JWT_SECRET = env_value('APP_JWT_SECRET', 'MES_JWT_SECRET')
 JWT_SECRET_IS_EPHEMERAL = not bool(RAW_JWT_SECRET)
 JWT_SECRET = RAW_JWT_SECRET or secrets.token_urlsafe(48)
 JWT_ALGORITHM = 'HS256'
-ACCESS_TOKEN_EXPIRE_SECONDS = int(os.getenv('MES_ACCESS_TOKEN_EXPIRE_SECONDS', str(8 * 60 * 60)))
-REFRESH_TOKEN_EXPIRE_SECONDS = int(os.getenv('MES_REFRESH_TOKEN_EXPIRE_SECONDS', str(7 * 24 * 60 * 60)))
+ACCESS_TOKEN_EXPIRE_SECONDS = int(env_value('APP_ACCESS_TOKEN_EXPIRE_SECONDS', 'MES_ACCESS_TOKEN_EXPIRE_SECONDS', str(8 * 60 * 60)))
+REFRESH_TOKEN_EXPIRE_SECONDS = int(env_value('APP_REFRESH_TOKEN_EXPIRE_SECONDS', 'MES_REFRESH_TOKEN_EXPIRE_SECONDS', str(7 * 24 * 60 * 60)))
 PASSWORD_HASH_PREFIX = 'pbkdf2_sha256'
-PASSWORD_HASH_ITERATIONS = int(os.getenv('MES_PASSWORD_HASH_ITERATIONS', '200000'))
+PASSWORD_HASH_ITERATIONS = int(env_value('APP_PASSWORD_HASH_ITERATIONS', 'MES_PASSWORD_HASH_ITERATIONS', '200000'))
 CORS_CONFIG = build_cors_config(
   app_env=APP_ENV,
-  raw_allow_origins=os.getenv('MES_CORS_ORIGINS', ''),
-  raw_allow_origin_regex=os.getenv('MES_CORS_ORIGIN_REGEX', ''),
+  raw_allow_origins=env_value('APP_CORS_ORIGINS', 'MES_CORS_ORIGINS'),
+  raw_allow_origin_regex=env_value('APP_CORS_ORIGIN_REGEX', 'MES_CORS_ORIGIN_REGEX'),
 )
 
 SECURITY_CONFIG = SecurityConfig(
@@ -81,10 +86,10 @@ get_conn = db_runtime.get_conn
 sync_pg_serial_sequences = db_runtime.sync_pg_serial_sequences
 
 app = FastAPI(
-  title='MES 本地后端服务',
+  title='Universal Fullstack Framework Local API',
   version='1.0.0',
   description=(
-    '本服务为 MES 系统本地后端实现。\n\n'
+    '本服务为 Universal Fullstack Framework 本地后端实现。\n\n'
     '- 接口文档已统一为中文说明\n'
     '- 返回结构统一为 `{code, msg, data}`\n'
     '- `code = 0` 表示成功，`msg` 为提示信息，`data` 为业务数据'

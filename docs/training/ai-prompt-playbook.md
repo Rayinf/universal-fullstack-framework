@@ -42,7 +42,63 @@
 - 后续开发要优先复用脚手架和 registry，不要随意扩写主文件。
 ```
 
-## 3. 新增全栈模块模板
+## 3. 项目启动模板
+
+适用场景：
+
+1. 从需规或产品说明启动一个具体项目
+2. 手动输入项目名称、业务域和模块规划
+3. 需要让 Agent 先生成项目配置、需求摘要和协作上下文
+
+### 3.1 需规自动配置
+
+可直接复制：
+
+```text
+请使用 universal-fullstack-framework skill，根据下面的需规启动项目。
+
+输入资料：
+[粘贴需求规格说明、产品 brief、会议纪要或用户故事]
+
+要求：
+1. 先阅读 skills/universal-fullstack-framework/SKILL.md 和 skills/universal-fullstack-framework/references/project-start-playbook.md。
+2. 从输入资料中提取 app_name、app_slug、company_name、description、target users、pain points、core modules、route_prefix、acceptance。
+3. 对缺失但会阻塞配置的字段提出问题。
+4. 生成 project.manifest.yaml。
+5. 生成 docs/requirements.md。
+6. 生成 docs/agent-brief.md。
+7. 根据 manifest 更新项目名称 fallback、后端 OpenAPI title/description、src/config/frameworkConfig.ts。
+8. 先完成项目配置，不批量生成业务模块。
+9. 运行必要验证，并汇报修改文件、验证结果、open questions 和下一步建议。
+```
+
+### 3.2 手动输入配置
+
+可直接复制：
+
+```text
+请使用 universal-fullstack-framework skill，按以下手动配置启动项目。
+
+项目配置：
+- app_name: 服务管理系统
+- app_slug: service_ops
+- company_name: 示例企业
+- description: 面向服务团队的客户、服务请求、知识库和回访管理系统
+- default_route: /system/basic-crud
+
+模块规划：
+- system: 系统管理，route_prefix=/system，enabled=true
+- customer: 客户管理，route_prefix=/customer，enabled=true
+- service_request: 服务请求，route_prefix=/service-request，enabled=false
+
+要求：
+1. 生成 project.manifest.yaml、docs/requirements.md、docs/agent-brief.md。
+2. 更新项目名称相关 fallback 和 frameworkConfig.ts 模块规划。
+3. 保持认证、系统管理、请求封装、路由守卫和 registry 主链路稳定。
+4. 完成后运行 py_compile / type-check 或 baseline 中必要部分。
+```
+
+## 4. 新增全栈模块模板
 
 适用场景：
 
@@ -83,7 +139,7 @@
 - API 成功响应按 code = 0 或 200 处理。
 ```
 
-## 4. 只补前端模块模板
+## 5. 只补前端模块模板
 
 适用场景：
 
@@ -114,7 +170,7 @@
 6. 至少运行 npm run type-check，并汇报结果。
 ```
 
-## 5. 只补后端模块模板
+## 6. 只补后端模块模板
 
 适用场景：
 
@@ -141,7 +197,7 @@
 6. 至少运行相关 py_compile 和目标测试，并汇报结果。
 ```
 
-## 6. 排查菜单/权限/路由问题模板
+## 7. 排查菜单/权限/路由问题模板
 
 适用场景：
 
@@ -179,7 +235,7 @@
 - 剩余风险
 ```
 
-## 7. 基座级代码审查模板
+## 8. 基座级代码审查模板
 
 适用场景：
 
@@ -207,7 +263,7 @@
 4. 最后才给简短总结
 ```
 
-## 8. 回归验证模板
+## 9. 回归验证模板
 
 适用场景：
 
@@ -230,7 +286,7 @@
    - 建议下一步怎么处理
 ```
 
-## 9. 多 agent 并行模板
+## 10. 多 agent 并行模板
 
 适用场景：
 
@@ -258,7 +314,7 @@
    - 验证结果
 ```
 
-## 10. 给 AI 的附加约束模板
+## 11. 给 AI 的附加约束模板
 
 如果你想让 AI 更贴近这个仓库的实际要求，可以在 prompt 末尾追加下面这段：
 
@@ -273,6 +329,6 @@
 7. 修改完成后必须说明验证情况。
 ```
 
-## 11. 一句话总结
+## 12. 核心公式
 
-> 好的 prompt 不是“更会说话”，而是能把这个仓库的约束、接入点和验收方式一次说明白，让 AI 进入正确的工程上下文。
+> 好的 prompt 能把这个仓库的约束、接入点和验收方式一次说明白，让 AI 进入正确的工程上下文。

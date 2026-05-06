@@ -19,17 +19,17 @@ BACKEND_ROOT = Path(__file__).resolve().parents[1]
 
 
 def connect_postgres(*, options: str | None = None) -> psycopg.Connection:
-  pg_dsn = os.getenv('MES_PG_DSN', '').strip()
+  pg_dsn = os.getenv('APP_PG_DSN', os.getenv('MES_PG_DSN', '')).strip()
   connect_kwargs: dict[str, object] = {}
   if pg_dsn:
     connect_kwargs['conninfo'] = pg_dsn
   else:
     connect_kwargs.update(
-      host=os.getenv('MES_PG_HOST', '127.0.0.1').strip(),
-      port=int(os.getenv('MES_PG_PORT', '5432')),
-      dbname=os.getenv('MES_PG_DATABASE', 'mes_local').strip(),
-      user=os.getenv('MES_PG_USER', os.getenv('USER', 'postgres')).strip(),
-      password=os.getenv('MES_PG_PASSWORD', '').strip(),
+      host=os.getenv('APP_PG_HOST', os.getenv('MES_PG_HOST', '127.0.0.1')).strip(),
+      port=int(os.getenv('APP_PG_PORT', os.getenv('MES_PG_PORT', '5432'))),
+      dbname=os.getenv('APP_PG_DATABASE', os.getenv('MES_PG_DATABASE', 'app_local')).strip(),
+      user=os.getenv('APP_PG_USER', os.getenv('MES_PG_USER', os.getenv('USER', 'postgres'))).strip(),
+      password=os.getenv('APP_PG_PASSWORD', os.getenv('MES_PG_PASSWORD', '')).strip(),
     )
   if options:
     connect_kwargs['options'] = options
@@ -90,7 +90,7 @@ class HttpSmokeTestCase(unittest.TestCase):
     admin_conn.close()
 
     env = os.environ.copy()
-    env.setdefault('MES_ENV', 'development')
+    env.setdefault('APP_ENV', 'development')
     env['PGOPTIONS'] = f'-c search_path={cls.schema_name}'
 
     cls.server_process = subprocess.Popen(

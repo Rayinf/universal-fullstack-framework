@@ -1,15 +1,17 @@
-# MES 管理系统
+# 原始样例项目 README
 
-基于 Vue 3 + TypeScript + Element Plus + Pinia + FastAPI + PostgreSQL 的制造执行系统（MES）项目，当前仓库已包含前端页面、后端接口、权限菜单、基础演示数据以及本地联调所需的核心能力。
+本文档保留框架抽象前的来源项目说明，用于追溯历史上下文。当前公开框架定位、启动方式和 Agent 协作约束以根目录 `README.md`、`AGENTS.md`、`CLAUDE.md` 为准。
 
-## 项目简介
+## 来源项目定位
 
-当前版本已落地的主要范围：
+来源项目是一个基于 Vue 3 + TypeScript + Element Plus + Pinia + FastAPI + PostgreSQL 的企业管理系统样例，已包含前端页面、后端接口、权限菜单、基础演示数据以及本地联调所需的核心能力。
 
-- 系统管理：组织、账户、角色、系统配置、参数管理、审批规则、日志、备份、消息通知
-- 销售管理：产品目录、报价单、合同、回款、佣金、合同看板
-- 生产执行：生产工单、工序报工、完工入库、生产看板
-- 本地示例模块：基础 CRUD、项目示例、采购示例、库存示例
+在 Universal Fullstack Framework 中，这些能力被抽象为：
+
+- 系统管理基座：组织、账户、角色、菜单权限、系统配置、参数管理、审批规则、日志、备份、消息通知
+- 示例业务域 A：主数据、业务单据、状态流转、回款/结算类记录、业务看板
+- 示例业务域 B：资源配置、执行记录、结果归档、过程看板
+- 本地示例模块：基础 CRUD、项目示例、订单示例、资源示例
 
 前端通过 Vite 启动，开发环境默认代理后端 `http://127.0.0.1:8000`。
 
@@ -24,7 +26,7 @@
 - Node.js `>= 18.18.0`
 - npm `>= 8.19.0`
 - Python `>= 3.10`
-- PostgreSQL `>= 13`（建议本地创建数据库 `mes_local`）
+- PostgreSQL `>= 13`
 
 ## 快速开始
 
@@ -57,19 +59,20 @@ VITE_DEV_SERVER_URL=http://127.0.0.1:8000
 VITE_DEV_LOGIN_API_URL=http://127.0.0.1:8000/auth/oauth2/token
 
 # 后端
-MES_ENV=development
-MES_PG_HOST=127.0.0.1
-MES_PG_PORT=5432
-MES_PG_DATABASE=mes_local
-MES_PG_USER=postgres
-MES_PG_PASSWORD=
-MES_CORS_ORIGINS=http://localhost:5174,http://127.0.0.1:5174
+APP_ENV=development
+APP_PG_HOST=127.0.0.1
+APP_PG_PORT=5432
+APP_PG_DATABASE=app_local
+APP_PG_USER=postgres
+APP_PG_PASSWORD=
+APP_CORS_ORIGINS=http://localhost:5174,http://127.0.0.1:5174
 ```
 
 说明：
 
 - 当前项目按 PostgreSQL 模式运行，根目录快捷命令也默认使用 PostgreSQL。
-- 生产环境必须配置强随机 `MES_JWT_SECRET`，且正确设置 CORS 白名单。
+- `APP_*` 是推荐的通用环境变量前缀，后端仍兼容读取历史前缀。
+- 线上环境应配置强随机 JWT secret，且正确设置 CORS 白名单。
 
 ### 4. 启动后端
 
@@ -137,7 +140,7 @@ npm run format           # Prettier 格式化 src/
 
 ```bash
 npm run test:unit        # 运行 Vitest
-npm run build            # 类型检查 + 生产构建
+npm run build            # 类型检查 + 构建
 npm run build-only       # 仅构建
 ```
 
@@ -149,7 +152,7 @@ npm run build-only       # 仅构建
 - 账户管理
 - 客户管理
 - 用户角色管理
-- 工位与设备管理
+- 资源配置管理
 - 参数与编码规则
 - 审批规则
 - 系统日志、用户日志、备份
@@ -157,28 +160,27 @@ npm run build-only       # 仅构建
 - 消息通知
 - 个人中心
 
-### 销售管理
+### 示例业务域 A
 
-- 产品目录管理
-- 报价单管理
-- 合同管理
-- 回款跟踪
-- 佣金计算
-- 合同业务看板
+- 主数据管理
+- 业务单据管理
+- 状态流转记录
+- 结算类记录
+- 业务看板
 
-### 生产执行
+### 示例业务域 B
 
-- 生产工单管理
-- 工序报工
-- 完工入库
-- 生产工单看板
+- 执行记录管理
+- 过程记录
+- 结果归档
+- 过程看板
 
 ### 本地示例
 
 - 本地基础 CRUD
 - 项目管理示例
-- 采购订单示例
-- 库存管理示例
+- 订单示例
+- 资源示例
 
 ## 目录结构
 
@@ -214,7 +216,7 @@ npm run build-only       # 仅构建
 - 新增业务页面时，需要同步检查：
   - `src/router/index.ts`
   - `src/config/menuConfig.ts`
-  - `backend/main.py` 中的菜单树与权限
+  - 后端菜单树与权限
   - 布局菜单过滤逻辑
 
 ## 联调与验收建议

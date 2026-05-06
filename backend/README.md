@@ -1,4 +1,6 @@
-# 本地 Python 后端（系统管理）
+# 本地 Python 后端
+
+本后端是 Universal Fullstack Framework 的本地 FastAPI 服务，负责认证、系统管理、菜单权限、示例业务接口和本地 CRUD 演示。
 
 ## 1. 安装依赖
 
@@ -33,31 +35,33 @@ npm run backend:dev:pg
 
 可在项目根目录 `.env` 或系统环境中配置：
 
+> 说明：推荐使用 `APP_*` 通用环境变量前缀。当前代码仍兼容读取旧前缀，便于从历史项目平滑迁移。
+
 ```bash
 # development | production
-MES_ENV=development
+APP_ENV=development
 
 # PostgreSQL 连接
 # 方式1：完整 DSN
-MES_PG_DSN=
+APP_PG_DSN=
 # 方式2：拆分参数
-MES_PG_HOST=127.0.0.1
-MES_PG_PORT=5432
-MES_PG_DATABASE=mes_local
-MES_PG_USER=postgres
-MES_PG_PASSWORD=
+APP_PG_HOST=127.0.0.1
+APP_PG_PORT=5432
+APP_PG_DATABASE=app_local
+APP_PG_USER=postgres
+APP_PG_PASSWORD=
 
 # 生产环境必须配置强密钥（>= 32位）
-MES_JWT_SECRET=please_replace_with_a_strong_random_secret_32_chars_min
+APP_JWT_SECRET=please_replace_with_a_strong_random_secret_32_chars_min
 
 # token有效期（秒）
-MES_ACCESS_TOKEN_EXPIRE_SECONDS=28800
-MES_REFRESH_TOKEN_EXPIRE_SECONDS=604800
+APP_ACCESS_TOKEN_EXPIRE_SECONDS=28800
+APP_REFRESH_TOKEN_EXPIRE_SECONDS=604800
 
 # CORS 白名单（逗号分隔）
-MES_CORS_ORIGINS=http://localhost:5174,http://127.0.0.1:5174
+APP_CORS_ORIGINS=http://localhost:5174,http://127.0.0.1:5174
 # 可选：正则白名单
-MES_CORS_ORIGIN_REGEX=
+APP_CORS_ORIGIN_REGEX=
 ```
 
 > 生产模式下会做安全校验：未配置强密钥、`CORS=*`、未配置 CORS 白名单会启动失败。
@@ -80,7 +84,7 @@ MES_CORS_ORIGIN_REGEX=
 npm run backend:dev:pg
 ```
 
-> 快捷命令已内置默认参数：`127.0.0.1:5432 / mes_local / 当前系统用户`，也可通过 `MES_PG_*` 覆盖。
+> 快捷命令已内置默认参数，可通过 `APP_PG_*` 覆盖数据库连接信息。
 
 ## 4. 接口文档（中文）
 
@@ -112,8 +116,8 @@ npm run backend:dev:pg
 - **系统配置**：`/manage/api/systemConfig/*`
 - **菜单与权限**：`/admin/menu/*`
 - **组织与用户**：`/admin/dept/*`、`/admin/role/*`、`/admin/user/*`
-- **客户管理**：`/manage/api/customers/*`
-- **工位与工艺**：`/manage/api/processLibrary/*`、`/manage/api/workstation/*`、`/manage/api/deviceInfo/*`
+- **示例业务数据**：`/manage/api/customers/*`
+- **示例资源配置**：`/manage/api/processLibrary/*`、`/manage/api/workstation/*`、`/manage/api/deviceInfo/*`
 - **基础参数**：`/manage/api/basicInformation/*`、`/manage/api/scanBindingProcess/*`、`/manage/api/codeRule/*`
 - **日志与备份**：`/admin/api/sysLogUser*`、`/manage/api/sysLog*`、`/manage/api/sysBakInfo*`
 - **审批流**：`/manage/api/approvalFlow*`、`/manage/api/approvalFlowResult*`
@@ -131,10 +135,10 @@ npm run backend:dev:pg
 当前仓库已提供标准后端模块脚手架，可直接基于模板生成新的模块骨架：
 
 ```bash
-./backend/.venv/bin/python backend/scripts/scaffold_backend_module.py quality_report \
-  --tag "质检报告" \
-  --resource-path /manage/api/qualityReport \
-  --table-name quality_report_records
+./backend/.venv/bin/python backend/scripts/scaffold_backend_module.py example_record \
+  --tag "示例记录" \
+  --resource-path /manage/api/exampleRecord \
+  --table-name example_records
 ```
 
 默认会输出到 `backend/app/modules/<module_name>/`，并生成：

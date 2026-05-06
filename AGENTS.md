@@ -1,260 +1,270 @@
-# AGENTS.md - AI编程助手指南
+# AGENTS.md - AI Coding Guide
 
-本文件为AI编程助手(如Claude、Cursor AI、GitHub Copilot)在此代码库中工作提供指导。
+This file gives AI coding assistants a stable working contract for this repository.
 
-## 1. 项目概述
+## 1. Project Overview
 
-这是一个**MES(制造执行系统)管理系统**,使用Vue 3、TypeScript、Element Plus和Pinia构建。
+This repository is a reusable fullstack framework for enterprise management systems. It combines:
 
-**技术栈**: Vue 3 + TypeScript + Vite + Pinia + Vue Router + Element Plus + Axios
+- Vue 3 + TypeScript + Vite frontend
+- Element Plus UI components
+- Pinia state management
+- Vue Router navigation and guards
+- Axios-based request wrapper
+- Python FastAPI backend
+- PostgreSQL persistence
+- Scaffold scripts for backend, frontend, and fullstack CRUD modules
+- A packaged Agent Skill under `skills/universal-fullstack-framework/`
 
-## 2. 构建/测试命令
+The repository includes several example business domains to demonstrate how modules attach to the shared foundation. Treat those domains as samples for extension patterns. The framework core is authentication, user/role/menu/permission management, system configuration, logs, backups, baseline CRUD, route/menu/permission registries, and validation scripts.
 
-### 开发命令
+## 2. Build, Test, And Run Commands
 
-```bash
-npm run dev              # 启动开发服务器 (--host 0.0.0.0)
-npm run dev:local        # 本地开发服务器 (仅localhost)
-npm run backend:dev      # 启动后端(默认 PostgreSQL)
-npm run backend:dev:pg   # 显式启动 PostgreSQL 后端
-npm run build            # 生产构建 (并行运行type-check和build-only)
-npm run preview          # 预览生产构建
-```
-
-### 代码质量命令
-
-```bash
-npm run lint             # ESLint检查并自动修复
-npm run format           # Prettier格式化代码
-npm run type-check       # TypeScript类型检查
-```
-
-### 测试命令
+### Development
 
 ```bash
-npm run test:unit        # 运行所有单元测试 (使用vitest)
-vitest run <文件路径>     # 运行单个测试文件
-vitest run -t "测试名称"  # 运行匹配名称的测试
+npm run dev              # Start frontend dev server
+npm run dev:local        # Start frontend dev server on localhost only
+npm run backend:dev      # Start FastAPI backend with PostgreSQL defaults
+npm run backend:dev:pg   # Explicit PostgreSQL backend startup
+npm run build            # Type-check plus production build
+npm run preview          # Preview production build
 ```
 
-**测试配置**: Vitest + jsdom环境 + Vue Test Utils
+### Quality
 
-## 3. 代码风格指南
+```bash
+npm run lint             # ESLint check and auto-fix
+npm run format           # Prettier format for src/
+npm run type-check       # Vue TypeScript check
+```
 
-### 3.1 导入规范
+### Tests
 
-**导入顺序**:
+```bash
+npm run test:unit
+vitest run <file>
+vitest run -t "test name"
+```
 
-1. Vue核心导入
-2. 第三方库 (Element Plus、图标等)
-3. 本地类型定义 (`@/types/*`)
-4. 本地API (`@/api/*`)
-5. 本地Store (`@/stores/*`)
-6. 本地组件 (`@/components/*`)
-7. 本地工具 (`@/utils/*`)
-8. 本地Composables (`@/composables/*`)
+### Baseline Gate
+
+Use the repository-level baseline gate for framework, scaffold, router, menu, backend, or auth changes:
+
+```bash
+bash scripts/verify_framework_baseline.sh
+```
+
+The script runs Python compile checks, backend regression tests, HTTP smoke tests, frontend type-check, and production build.
+
+## 3. Framework Boundaries
+
+Preserve the shared framework foundation:
+
+- authentication and token storage
+- request wrapper and API response normalization
+- route guards
+- menu and permission registries
+- shared layout components
+- common dialog/form/table patterns
+- scaffold scripts and templates
+- `scripts/verify_framework_baseline.sh`
+
+When adding business functionality, keep extension code isolated under module-oriented directories:
+
+- `backend/app/modules/<domain>/`
+- `src/api/<bucket>/`
+- `src/types/<bucket>/`
+- `src/stores/<bucket>/`
+- `src/views/<view-bucket>/`
+
+## 4. Scaffold Workflow
+
+Prefer the repo-local fullstack scaffold when both backend and frontend are involved:
+
+```bash
+./backend/.venv/bin/python scripts/scaffold_fullstack_module.py example_record \
+  --tag "Example Record" \
+  --api-base-path /manage/api/exampleRecord \
+  --table-name example_records \
+  --menu-parent system \
+  --route-path /system/example-record \
+  --route-name system-example-record \
+  --function-code APP-FUNC-EXAMPLE-RECORD \
+  --with-store
+```
+
+After generation:
+
+1. Replace placeholder fields such as `name`, `code`, `status`, and `remark`.
+2. Replace placeholder labels, columns, forms, validation rules, SQL, and error messages.
+3. Confirm frontend `meta.functionCode` matches backend `permission`.
+4. Confirm route path, menu parent, backend menu entry, and layout filtering agree.
+5. Run targeted scaffold tests and the baseline gate.
+
+Use single-sided scaffolds only for intentionally single-sided work:
+
+```bash
+./backend/.venv/bin/python backend/scripts/scaffold_backend_module.py <module_name>
+./backend/.venv/bin/python scripts/scaffold_frontend_module.py <module_name>
+```
+
+## 5. Route, Menu, Permission, Layout Alignment
+
+Route/menu/permission/layout must move together. For any new page or path change, check:
+
+1. Frontend route registry: `src/router/scaffoldedRoutes.ts` or `src/router/index.ts`
+2. Frontend menu registry: `src/config/scaffoldMenuRegistry.ts` or `src/config/menuConfig.ts`
+3. Backend menu registry: `backend/app/modules/system_admin/scaffold_menu_registry.py` or `backend/app/modules/system_admin/menu.py`
+4. Layout and guard allowlist: `src/layouts/MainLayout.vue`, `src/config/frameworkConfig.ts`, menu store helpers
+
+Also verify:
+
+- frontend `meta.functionCode`
+- backend `permission`
+- role-menu default mappings
+- `/admin/menu/tree`
+- `/admin/menu/tree/{roleId}`
+
+## 6. Frontend Coding Standards
+
+### Imports
+
+Recommended order:
+
+1. Vue core
+2. third-party libraries
+3. local types
+4. local API modules
+5. local stores
+6. local components
+7. local utilities
+8. local composables
+
+Use `@/` aliases for source imports.
+
+### TypeScript
+
+Use explicit types for refs, state, API payloads, and table rows.
 
 ```typescript
-// ✅ 正确示例
-import { ref, computed, onMounted } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { Search, Plus } from '@element-plus/icons-vue'
-import type { BasicInfoRecord } from '@/types/parameter'
-import { pageBasicInfoApi } from '@/api/parameter'
-import { useParameterStore } from '@/stores/parameterStore'
-import FormDialog from '@/components/common/FormDialog.vue'
-import { formatDate } from '@/utils/dateUtils'
-```
-
-**路径别名**: 始终使用 `@/` 代替相对路径 `../`
-
-### 3.2 TypeScript类型规范
-
-**必须明确类型**:
-
-```typescript
-// ✅ 正确
-const users = ref<User[]>([])
+const records = ref<RecordItem[]>([])
 const loading = ref<boolean>(false)
 const total = ref<number>(0)
-
-// ❌ 错误 - 避免隐式any
-const data = ref([])
 ```
 
-**接口定义**:
+Use `interface` for structured data unless a union or mapped type is needed. Keep ID fields as `string` for frontend/backend consistency.
 
-```typescript
-// 统一使用interface而非type (除非需要联合类型)
-export interface ApiResponse<T> {
-  code: number
-  msg: string
-  data?: T
-}
-```
+### Vue
 
-**ID类型一致性**: 所有`userId`, `salesId`等ID字段统一使用`string`类型,不使用`number`
-
-### 3.3 命名约定
-
-- **变量/函数**: camelCase (`fetchUsers`, `isLoading`)
-- **组件**: PascalCase (`FormDialog.vue`, `BaseDialog.vue`)
-- **常量**: UPPER_SNAKE_CASE (`PAGE_SIZE_CONFIG`, `API_BASE_URL`)
-- **类型/接口**: PascalCase (`UserRecord`, `ApiResponse`)
-- **Store**: camelCase + Store后缀 (`useUserStore`, `useParameterStore`)
-
-### 3.4 Vue组件规范
-
-**使用Composition API** (setup script):
+Use `<script setup lang="ts">` and Composition API. Keep component order:
 
 ```vue
+<template>
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-
-// 定义props
-interface Props {
-  modelValue: boolean
-  title: string
-  loading?: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  loading: false,
-})
-
-// 定义emits
-const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
-  submit: [data: Record<string, any>]
-}>()
-</script>
+<style scoped>
 ```
 
-**模板顺序**: `<template>` → `<script setup>` → `<style scoped>`
+### Pinia
 
-### 3.5 Pinia Store规范
-
-**使用Composition API风格**:
+Prefer Composition-style stores:
 
 ```typescript
-import { defineStore } from 'pinia'
-import { ref } from 'vue'
-
 export const useExampleStore = defineStore('example', () => {
-  // State
-  const data = ref<DataType[]>([])
+  const records = ref<ExampleRecord[]>([])
   const loading = ref(false)
 
-  // Actions
-  const fetchData = async () => {
+  const fetchRecords = async () => {
     loading.value = true
     try {
-      // API调用
+      // API call
     } finally {
       loading.value = false
     }
   }
 
-  return {
-    data,
-    loading,
-    fetchData,
-  }
+  return { records, loading, fetchRecords }
 })
 ```
 
-### 3.6 API请求规范
+### API
 
-**使用封装的request工具**:
+Use `src/utils/request.ts`:
 
 ```typescript
-import request from '@/utils/request'
-
-// GET请求
 const result = await request.get<ResponseType>('/api/path', params)
-
-// POST请求
-const result = await request.post<ResponseType>('/api/path', data)
+const saved = await request.post<ResponseType>('/api/path', payload)
 ```
 
-**标准响应处理**:
+Treat `code === 0` and `code === 200` as success.
 
-```typescript
-if (result.code === 0 || result.code === 200) {
-  // 成功处理
-  data.value = result.data || []
-} else {
-  ElMessage.error(result.msg || '操作失败')
-}
+## 7. Backend Coding Standards
+
+Backend modules should follow this structure:
+
+```text
+backend/app/modules/<domain>/
+├── router.py
+├── deps.py
+├── helpers.py
+├── serializers.py
+├── routes/
+├── services/
+└── repositories/
 ```
 
-## 4. 错误处理规范
+Layer responsibilities:
 
-**必须包含完整的错误处理**:
+- `router.py`: create and register routes
+- `deps.py`: collect route dependencies
+- `helpers.py`: parse and normalize inputs
+- `serializers.py`: map rows to API response structures
+- `routes/`: read HTTP inputs and call services
+- `services/`: coordinate business logic and transactions
+- `repositories/`: own SQL
+
+Keep response shape consistent:
+
+```json
+{ "code": 0, "msg": "success", "data": {} }
+```
+
+## 8. Error Handling
+
+All async frontend operations need full loading and error handling:
 
 ```typescript
 const fetchData = async () => {
   loading.value = true
   try {
     const res = await api()
-    if (res.code === 0) {
-      data.value = res.data || []
+    if (res.code === 0 || res.code === 200) {
+      records.value = res.data || []
     } else {
-      ElMessage.error(res.msg || '获取数据失败')
+      ElMessage.error(res.msg || 'Operation failed')
     }
   } catch (error) {
-    console.error('获取数据失败:', error)
-    ElMessage.error('发生网络错误')
+    console.error('Fetch failed:', error)
+    ElMessage.error('Network error')
   } finally {
     loading.value = false
   }
 }
 ```
 
-**关键要点**:
+## 9. Shared UI Standards
 
-- 所有异步操作必须try-catch
-- 失败时重置数据为空状态
-- 使用ElMessage显示用户友好的错误消息
-- 记录console.error以便调试
+- Use `ElMessage` for lightweight feedback.
+- Use `ElMessageBox.confirm` for destructive operations.
+- Use form `:rules` for validation.
+- Use striped and highlightable tables.
+- Import shared page styles with `@import '@/styles/common.css'`.
+- Put shared table/container spacing in `src/styles/common.css`.
+- Keep new module pages visually aligned with existing scaffold pages.
 
-## 5. 分页参数管理
+## 10. Constants And Pagination
 
-**智能分页机制** - 避免页面间参数污染:
-
-```typescript
-// 只有在没有传入特定size参数时,才更新本地分页参数
-if (!params?.size) {
-  currentPage.value = response.data.current
-  pageSize.value = response.data.size
-}
-```
-
-**使用场景**:
-
-- 列表页面: 使用默认`size: 10`
-- 下拉选择器: 传入`size: 1000`获取全量数据
-
-## 6. 资源清理
-
-**组件卸载时清理资源**:
-
-```typescript
-import { onMounted, onUnmounted } from 'vue'
-
-onMounted(() => {
-  window.addEventListener('resize', handleResize)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-  // 清理其他资源
-})
-```
-
-## 7. 常量管理
-
-**使用集中的常量文件** (`src/utils/constants.ts`):
+Use `src/utils/constants.ts`:
 
 ```typescript
 export const PAGE_SIZE_CONFIG = {
@@ -264,139 +274,53 @@ export const PAGE_SIZE_CONFIG = {
 } as const
 ```
 
-**禁止硬编码数值** - 始终从constants导入
+Default list pages use normal pagination. Selector APIs can request large page sizes when necessary.
 
-## 8. Element Plus使用规范
+## 11. Seed Data
 
-- 使用`ElMessage`显示提示信息
-- 使用`ElMessageBox.confirm`确认危险操作
-- 表单验证使用`:rules`属性
-- 表格使用`stripe`和`highlight-current-row`属性
+Seed data should live in backend initialization code and use empty-table checks:
 
-## 9. 图表设计规范 (ECharts)
-
-**统一配色方案**:
-
-```javascript
-const colors = {
-  primary: ['#6366f1', '#818cf8', '#a5b4fc'],
-  success: ['#14b8a6', '#5eead4', '#99f6e4'],
-  warning: ['#f59e0b', '#fbbf24', '#fcd34d'],
-}
+```sql
+SELECT COUNT(1) AS cnt FROM table_name
 ```
 
-**必须实现响应式**:
+Provide complete demo chains for example domains so pages are testable immediately. Prefer backend seed data over frontend-only mocks for integration scenarios.
 
-```javascript
-onMounted(() => {
-  initCharts()
-  window.addEventListener('resize', handleResize)
-})
+## 12. Git Commit Convention
 
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-  charts.forEach((chart) => chart.dispose())
-})
-```
+Use conventional commits:
 
-## 10. 文件组织
+- `feat:`
+- `fix:`
+- `docs:`
+- `style:`
+- `refactor:`
+- `test:`
+- `chore:`
 
-```
-src/
-├── api/          # API接口定义
-├── assets/       # 静态资源
-├── components/   # 可复用组件
-│   ├── common/   # 通用组件
-│   └── icons/    # 图标组件
-├── layouts/      # 布局组件
-├── router/       # 路由配置
-├── stores/       # Pinia状态管理
-├── types/        # TypeScript类型定义
-├── utils/        # 工具函数
-└── views/        # 页面组件
-```
+## 13. Validation Checklist
 
-## 11. Git提交规范
-
-使用约定式提交:
-
-- `feat:` 新功能
-- `fix:` 修复bug
-- `docs:` 文档更新
-- `style:` 代码格式调整
-- `refactor:` 重构
-- `test:` 测试相关
-- `chore:` 构建/工具变动
-
-## 12. 关键注意事项
-
-1. **始终用中文回复用户** (来自~/.claude/CLAUDE.md)
-2. 所有ID字段使用`string`类型
-3. API响应code为0或200表示成功
-4. 分页默认10条,选择器使用1000条
-5. 新建文件时优先编辑现有文件
-6. 遵循已有的组件和Store模式
-7. Token自动注入,无需手动处理Authorization
-8. 后端数据库统一为 PostgreSQL，不再保留旧本地回退库路径
-
-## 13. 近期实战经验（Skill更新）
-
-以下规则来自最近阶段（销售+生产闭环）的真实踩坑，后续开发必须默认遵循。
-
-### 13.1 路由/菜单/权限联动检查（高优先级）
-
-新增或调整页面路径时，必须同步更新以下4处：
-
-1. 前端路由：`src/router/index.ts`
-2. 前端菜单配置：`src/config/menuConfig.ts`
-3. 后端菜单树：`backend/main.py` 的 `menu_tree()`
-4. 布局菜单过滤逻辑：`src/layouts/MainLayout.vue` / `src/config/frameworkConfig.ts`
-
-**关键坑位**：
-
-- 仅改路由和菜单不够，若布局仍写死只显示`/system/*`，新模块（如`/sales/*`、`/production/*`）会被直接过滤，看起来像“菜单没生效”。
-- `meta.functionCode` 与后端 `permission` 必须一致，否则会被路由守卫判定无权限并重定向。
-
-### 13.2 菜单权限初始化规则
-
-- `role_menus` 默认权限来源于 `default_menu_ids = flatten_menu_ids(menu_tree())`。
-- 调整菜单树结构（如把业务从系统管理拆到独立一级）后，必须确认默认角色仍能拿到新菜单ID。
-- 验证顺序：登录后检查 `/admin/menu/tree`、`/admin/menu/tree/{roleId}` 返回值，再看前端渲染。
-
-### 13.3 后端依赖与运行环境
-
-- 涉及 `UploadFile/Form` 的接口，虚拟环境必须安装 `python-multipart`。
-- 依赖安装要在项目虚拟环境执行：
-  - `./.venv/bin/python -m pip install -r requirements.txt`
-- 启动报 `Address already in use` 多为端口占用，不是代码错误；需先确认已有进程。
-
-### 13.4 模拟数据（Seed）规范
-
-- 所有演示数据统一放 `init_db()`，并使用“空表才插入”模式：
-  - `SELECT COUNT(1) AS cnt FROM xxx` + `if cnt == 0: seed...`
-- 业务链路型数据要成套提供（如：产品→报价→合同→回款→佣金、工单→报工→入库），避免页面可进但无可测数据。
-- 不要在前端写死mock，优先走后端初始化数据，保证联调一致性。
-
-### 13.5 页面样式一致性规范
-
-- 新业务页面必须 `@import '@/styles/common.css'`。
-- 通用表格容器样式放入 `common.css`（如 `.table-container` 的桌面/移动端内边距），不要只在老页面局部定义。
-- 目标：新增页面与示例页在留白、表格密度、分页区视觉上保持一致。
-
-### 13.6 每次阶段开发的最小验收清单
-
-后端：
+Before closing framework or module work, run or report:
 
 - `python3 -m py_compile backend/main.py`
-- 必要时执行 `init_db()` 并抽查关键表计数
-
-前端：
-
+- targeted backend tests when backend changed
 - `npm run type-check`
-- 手工验证：菜单层级、页面可达、按钮可用、导出可下载、通知可跳转
+- `npm run build-only`
+- `bash scripts/verify_framework_baseline.sh` for shared framework changes
 
-联调：
+Manual smoke:
 
-- 至少走通一条端到端业务链路（创建→审批/流转→结果回写）。
+1. Login.
+2. Open protected user info.
+3. Open menu tree.
+4. Open one list page.
+5. Create, update, delete one demo record when the module supports CRUD.
 
-详细架构和业务规则请参考: `CLAUDE.md`
+## 14. Related Docs
+
+- `README.md`
+- `FRAMEWORK_GUIDE.md`
+- `docs/fullstack-module-template.md`
+- `docs/frontend-module-template.md`
+- `backend/docs/backend-module-template.md`
+- `skills/universal-fullstack-framework/SKILL.md`
